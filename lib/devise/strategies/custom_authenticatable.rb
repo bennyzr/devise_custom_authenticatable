@@ -9,7 +9,7 @@ module Devise::Strategies
       return pass unless resource.respond_to?(:valid_for_custom_authentication?)
 
       catch(:skip_custom_strategies) do
-        if validate(resource){ resource.valid_for_custom_authentication?(password) }
+        if validate(resource){ resource.valid_for_custom_authentication?(password, request.remote_ip) }
           resource.after_custom_authentication
           success!(resource)
         end
